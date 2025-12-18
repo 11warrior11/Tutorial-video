@@ -1,9 +1,10 @@
+import TodoCreator from "@/layout/TodoCreator";
+import TodoList from "@/layout/TodoList";
 import { Todo } from "@/types/todo";
 import { useState } from "react";
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import { COLORS } from "../consntants/ui";
 import Header from "../layout/Header";
-import TodoList from "@/layout/TodoList";
 
 const defaultTodos: Todo[] = [
   {
@@ -26,13 +27,21 @@ const defaultTodos: Todo[] = [
 export default function Index() {
   const [todos, setTodos] = useState<Todo[]>(defaultTodos);
 
+  const addTodo = (title: Todo["title"]) => {
+    setTodos([...todos, { id: todos.length + 1, title, isCompleted: false }]);
+  };
+
   const completedTodos = todos.filter((todo) => todo.isCompleted);
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={"light-content"} />
-      <Header totalTodos={todos.length} completedTodos={completedTodos.length}/>
-      <TodoList todos={todos}/>
+      <Header
+        totalTodos={todos.length}
+        completedTodos={completedTodos.length}
+      />
+      <TodoCreator onAddTodo={() => {addTodo}} />
+      <TodoList todos={todos} />
     </View>
   );
 }
