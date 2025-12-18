@@ -40,7 +40,7 @@ export default function Index() {
         totalTodos={todos.length}
         completedTodos={completedTodos.length}
       />
-      <TodoCreator onAddTodo={() => {addTodo}} />
+      <TodoCreator onAddTodo={addTodo} />
       <TodoList todos={todos} />
     </View>
   );

@@ -1,10 +1,21 @@
 import { COLORS } from "@/consntants/ui";
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
 
-type StyledTextInputProps = TextInputProps;
+type StyledTextInputProps = TextInputProps & {
+  isError?: boolean;
+};
 
-const StyledTextInput: React.FC<StyledTextInputProps> = ({ ...props }) => {
-  return <TextInput style={[styles.input, props.style]} {...props} placeholderTextColor={"#323232"} />;
+const StyledTextInput: React.FC<StyledTextInputProps> = ({
+  isError,
+  ...props
+}) => {
+  return (
+    <TextInput
+      style={[styles.input, props.style, isError ? styles.error : null]}
+      {...props}
+      placeholderTextColor={"#323232"}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
@@ -16,6 +27,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.PRIMARY_BORDER,
     flex: 1,
+  },
+  error: {
+    borderColor: COLORS.PRIMARY_RED,
   },
 });
 

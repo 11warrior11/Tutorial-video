@@ -12,17 +12,23 @@ const TodoCreator: React.FC<TodoCreatorProps> = ({ onAddTodo }) => {
   const [text, setText] = useState("");
   const [inputError, setInputError] = useState(false);
 
-  const onPress = () => {
-    
-  }
+  const onPressAdd = () => {
+    if (!text) {
+      setInputError(true);
+      return;
+    }
+    onAddTodo(text);
+    setText("");
+  };
   return (
     <View style={styles.container}>
       <StyledTextInput
         placeholder="Add a task..."
         value={text}
         onChangeText={setText}
+        isError={inputError}
       />
-      <StyledButton label="+" onPress={() => {}} />
+      <StyledButton label="+" onPress={onPressAdd} />
     </View>
   );
 };
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "space-between",
     gap: 10,
-    marginVertical: 20,
+    marginVertical: 10,
     paddingHorizontal: 10,
   },
 });
