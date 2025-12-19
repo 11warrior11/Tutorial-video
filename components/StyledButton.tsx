@@ -19,18 +19,26 @@ const StyledButton: React.FC<StyledButtonProps> = ({
   icon,
   size = "default",
   variant = "primary",
+  disabled,
   ...props
 }) => {
+  const textVariant = (() => {
+    if (size === "large") return "heading";
+    return "small";
+  })();
   return (
     <TouchableOpacity
       style={[
         styles.base,
+        disabled ? styles.disabled : null,
         size === "small" ? styles.small : null,
+        size === "large" ? styles.large : null,
         variant === "delete" ? styles.delete : null,
       ]}
-      {...[props]}
+      {...props}
+      disabled={disabled}
     >
-      {label && <StyledText>{label}</StyledText>}
+      {label && <StyledText variant={textVariant}>{label}</StyledText>}
       {icon && <Ionicons name={icon} size={14} color={COLORS.PRIMARY_TEXT} />}
     </TouchableOpacity>
   );
@@ -47,12 +55,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
   },
+  disabled: {
+    opacity: 0.5,
+  },
   small: {
     paddingHorizontal: 12,
     paddingVertical: 12,
   },
   delete: {
     backgroundColor: COLORS.PRIMARY_RED,
+  },
+  large: {
+    paddingHorizontal: 30,
   },
 });
 

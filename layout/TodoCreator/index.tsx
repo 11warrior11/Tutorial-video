@@ -1,7 +1,7 @@
 import StyledButton from "@/components/StyledButton";
 import StyledTextInput from "@/components/StyledTextInput";
 import { Todo } from "@/types/todo";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 type TodoCreatorProps = {
@@ -20,6 +20,12 @@ const TodoCreator: React.FC<TodoCreatorProps> = ({ onAddTodo }) => {
     onAddTodo(text);
     setText("");
   };
+
+  useEffect(() => {
+    if (inputError && text) {
+          setInputError(false);
+    }
+  }, [text]);
   return (
     <View style={styles.container}>
       <StyledTextInput
@@ -28,7 +34,7 @@ const TodoCreator: React.FC<TodoCreatorProps> = ({ onAddTodo }) => {
         onChangeText={setText}
         isError={inputError}
       />
-      <StyledButton label="+" onPress={onPressAdd} />
+      <StyledButton label="+" onPress={onPressAdd} disabled={inputError} size="large"/>
     </View>
   );
 };
